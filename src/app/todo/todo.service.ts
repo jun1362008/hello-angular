@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class TodoService {
 
-  private api_url = 'api/todos';
+  private api_url = 'http://localhost:3000/todos';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
@@ -22,7 +22,7 @@ export class TodoService {
     return this.http
       .post(this.api_url, JSON.stringify(todo), {headers: this.headers})
       .toPromise()
-      .then(res => res.json().data as Todo)
+      .then(res => res.json() as Todo)
       .catch(this.handleError);
   }
 
@@ -53,8 +53,26 @@ export class TodoService {
     return this.http
       .get(this.api_url)
       .toPromise()
-      .then(res => res.json().data as Todo[])
+      .then(res => res.json() as Todo[])
       .catch(this.handleError);
+  }
+
+  // GET /todo?completed=true/false
+  filterTodos(filter: string): Promise<Todo[]> {
+    switch (filter) {
+      case 'ACTIVE': return this.http
+        .get(`${this.api_url}?completed=false`)
+        .toPromise()
+        .then(res => res.json() as Todo[])
+        .catch(this.handleError);
+      case 'COMPLETED': return this.http
+        .get(`${this.api_url}?completed=true`)
+        .toPromise()
+        .then(res => res.json() as Todo[])
+        .catch(this.handleError);
+      default:
+        return this.getTodos();
+    }
   }
 
 

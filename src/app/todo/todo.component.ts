@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Todo } from './todo.model';
 import { TodoService } from './todo.service';
 
 @Component({
-  selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],
   providers: [TodoService]
@@ -12,10 +12,16 @@ export class TodoComponent implements OnInit {
   todos: Todo[] = [];
   desc = '';
 
-  constructor(private service: TodoService) { }
+  constructor(
+    @Inject('todoService') private service,
+    private route: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit() {
-    this.getTodos();
+    this.route.params.forEach((params: Params) => {
+      let filter = params['filter'];
+      this.filterTodos(filter)
+    })
   }
 
   addTodo() {
@@ -52,10 +58,14 @@ export class TodoComponent implements OnInit {
       });
   }
 
-  getTodos(): void {
+  filterTodos(filter: string): void {
     this.service
-      .getTodos()
+      .filterTodos(filter)
       .then(todos => this.todos = [...todos]);
+  }
+
+  onTextChanges(value) {
+    this.desc = value;
   }
 
 }
