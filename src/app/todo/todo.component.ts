@@ -43,6 +43,7 @@ export class TodoComponent implements OnInit {
           t,
           ...this.todos.slice(i + 1)
         ];
+        return null;
       });
   }
 
@@ -55,6 +56,7 @@ export class TodoComponent implements OnInit {
           ...this.todos.slice(0, i),
           ...this.todos.slice(i + 1)
         ];
+        return null;
       });
   }
 
@@ -66,6 +68,17 @@ export class TodoComponent implements OnInit {
 
   onTextChanges(value) {
     this.desc = value;
+  }
+
+  toggleAll() {
+    Promise.all(this.todos.map(todo => this.toggleTodo(todo)));
+  }
+
+  clearCompleted() {
+    const completed_todos = this.todos.filter(todo => todo.completed === true);
+    const active_todos = this.todos.filter(todo => todo.completed === false);
+    Promise.all(completed_todos.map(todo => this.service.deleteTodoById(todo.id)))
+      .then(() => this.todos = [...active_todos]);
   }
 
 }

@@ -3,7 +3,7 @@
     {
       "id": "f823b191-7799-438d-8d78-fcb1e468fc78",
       "desc": "blablabla",
-      "completed": false
+      "completed": true
     },
     {
       "id": "dd65a7c0-e24f-6c66-862e-0999ea504ca0",
@@ -11,14 +11,9 @@
       "completed": false
     },
     {
-      "id": "c1092224-4064-b921-77a9-3fc091fbbd87",
-      "desc": "you wanna try",
-      "completed": false
-    },
-    {
-      "id": "e89d582b-1a90-a0f1-be07-623ddb29d55e",
-      "desc": "have to say good",
-      "completed": false
+      "id": "51ee0a14-02b5-e5c7-7139-5e30a332116e",
+      "desc": "oh yeah",
+      "completed": true
     }
   ]
 }

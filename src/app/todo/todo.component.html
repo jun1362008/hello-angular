@@ -7,8 +7,11 @@
   <app-todo-list
           [todos]="todos"
           (onRemoveTodo)="removeTodo($event)"
-          (onToggleTodo)="toggleTodo($event)"
-  >
+          (onToggleAll)="toggleAll()"
+          (onToggleTodo)="toggleTodo($event)">
   </app-todo-list>
-  <app-todo-footer [itemCount]="todos?.length"></app-todo-footer>
+  <app-todo-footer
+          (onClear)="clearCompleted()"
+          [itemCount]="todos?.length">
+  </app-todo-footer>
 </section>
