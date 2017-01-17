@@ -12,6 +12,7 @@ export class TodoService {
 
   constructor(private http: Http) { }
 
+  // POST /todos
   addTodo(todoItem: string): Promise<Todo> {
     let todo = {
       id: UUID.UUID(),
@@ -24,6 +25,38 @@ export class TodoService {
       .then(res => res.json().data as Todo)
       .catch(this.handleError);
   }
+
+  // PUT /todos/:id
+  toggleTodo(todo: Todo): Promise<Todo> {
+    const url = `${this.api_url}/${todo.id}`;
+    console.log(url);
+    let updatedTodo = Object.assign({}, todo, {completed: !todo.completed});
+    return this.http
+      .put(url, JSON.stringify(updatedTodo), {headers: this.headers})
+      .toPromise()
+      .then(() => updatedTodo)
+      .catch(this.handleError);
+  }
+
+  // DELETE /todos/:id
+  deleteTodoById(id: string): Promise<void> {
+    const url = `${this.api_url}/${id}`;
+    return this.http
+      .delete(url, {headers: this.headers})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
+
+  // GET /todos
+  getTodos(): Promise<Todo[]> {
+    return this.http
+      .get(this.api_url)
+      .toPromise()
+      .then(res => res.json().data as Todo[])
+      .catch(this.handleError);
+  }
+
 
   private handleError(error: any):Promise<any> {
     console.error('An error occurred', error);
