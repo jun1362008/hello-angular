@@ -5,4 +5,10 @@ export class AuthService {
 
   constructor() { }
 
+  loginWithCredentials(username: string, password: string): boolean {
+    if(username === 'huangjun')
+      return true;
+    return false;
+  }
+
 }

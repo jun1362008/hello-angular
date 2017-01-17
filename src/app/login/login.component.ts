@@ -1,25 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-login',
   template: `
     <div>
-        <input type="text" #usernameRef>
-        <input type="password" #passwordRef>
-        <button (click)="onClick(usernameRef.value,passwordRef.value)">Login</button>
+        <form #fromRef="ngForm" (submit)="onSubmit(fromRef.value)">
+            <fieldset ngModelGroup="login">
+              <input type="text" name="username" [(ngModel)]="username" #usernameRef="ngModel" required minlength="3">
+              <div *ngIf="usernameRef.errors?.required">this is required</div>
+              <div *ngIf="usernameRef.errors?.minlength">should be at least 3 charactors</div>
+              <input type="password" name="password" [(ngModel)]="password" #passwordRef="ngModel" required>
+              <div *ngIf="passwordRef.errors?.required">this is required</div>
+              <button type="submit">Login</button>
+            </fieldset>
+        </form>
     </div>
   `,
-  styles: []
+  styles: [`
+      input.ng-invalid{
+        border: 3px solid red;
+      }
+      input.ng-valid{
+        border: 3px solid green;
+      }
+  `]
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  username = '';
+  password = '';
+
+  constructor(@Inject('auth') private service) { }
 
   ngOnInit() {
   }
 
-  onClick(username,password) {
-    console.log('username:',username,'\n'+'password:',password);
+  onSubmit(formValue) {
+    console.log('auth result is:',this.service.loginWithCredentials(formValue.login.username,formValue.login.password));
   }
 
 }
