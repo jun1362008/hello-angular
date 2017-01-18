@@ -1,10 +1,11 @@
 /**
- * Created by malianghang on 2017/1/17.
+ * Created by malianghang on 2017/1/18.
  */
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 
-export const routes: Routes = [
+const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
@@ -19,4 +20,13 @@ export const routes: Routes = [
     redirectTo: 'todo/ALL'
   }
 ];
-export const routing = RouterModule.forRoot(routes);
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
+  exports: [
+    RouterModule
+  ]
+})
+export class AppRoutingModule {}
