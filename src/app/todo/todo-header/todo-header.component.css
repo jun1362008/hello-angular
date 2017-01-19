@@ -25,6 +25,9 @@ input::input-placeholder {
     font-weight: 300;
     color: #e6e6e6;
 }
+input{
+    outline: none;
+}
 .new-todo,
 .edit {
     position: relative;

@@ -49,7 +49,7 @@
     {
       "id": "67320407-ede2-fdb1-6904-9756f08090f4",
       "desc": "first",
-      "completed": false,
+      "completed": true,
       "userId": 1
     }
   ],
