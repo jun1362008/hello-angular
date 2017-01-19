@@ -8,6 +8,7 @@ import { AuthService } from './core/auth.service';
 import { TodoModule } from './todo/todo.module';
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
+import { MdlModule } from 'angular2-mdl';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    MdlModule,
     TodoModule,
     CoreModule
   ],
