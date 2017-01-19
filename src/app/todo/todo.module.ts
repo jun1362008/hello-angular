@@ -12,9 +12,11 @@ import { TodoService } from './todo.service';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoRoutingModule } from './todo-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
+    SharedModule,
     CommonModule,
     FormsModule,
     HttpModule,

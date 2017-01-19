@@ -8,9 +8,6 @@ import { UserService } from './user.service';
 import { AuthGuardService } from './auth-guard.service';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
   providers: [
     { provide: 'auth', useClass: AuthService },
     { provide: 'user', useClass: UserService },
