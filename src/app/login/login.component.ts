@@ -2,6 +2,8 @@ import { Component, Inject, OnDestroy, trigger, state, style, animate, transitio
 import { Auth, Image } from '../domain/entities';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MdlDialogReference, MdlDialogService } from 'angular2-mdl';
+import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +34,7 @@ export class LoginComponent implements OnDestroy {
 
   constructor(@Inject('auth') private service,
     @Inject('bing') private bingService,
+    private dialogService: MdlDialogService,
     private router: Router) {
     this.bingService.getImageUrl()
         .subscribe((images: Image[]) => {
@@ -41,7 +44,8 @@ export class LoginComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if(this.subscription !== undefined)
+      this.subscription.unsubscribe();
   }
 
   rotateImages(arr: Image[]) {
@@ -55,6 +59,21 @@ export class LoginComponent implements OnDestroy {
 
   toggleLoginState(state: boolean) {
     this.loginBtnState = state ? 'active' : 'inactive';
+  }
+
+  register($event: MouseEvent){
+    let pDialog = this.dialogService.showCustomDialog({
+      component: RegisterDialogComponent,
+      isModal: true,
+      styles: {'width': '350px'},
+      clickOutsideToClose: true,
+      enterTransitionDuration: 400,
+      leaveTransitionDuration: 400
+    });
+    pDialog.map( (dialogReference: MdlDialogReference) => {
+      console.log('dialog visible', dialogReference);
+    });
+
   }
 
   onSubmit() {

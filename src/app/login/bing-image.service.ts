@@ -12,7 +12,7 @@ export class BingImageService {
   });
 
   constructor(private http: Http) {
-    const q = '库里+墙纸';
+    const q = '豪华跑车+墙纸';
     const baseUrl: string = `https://api.cognitive.microsoft.com/bing/v5.0/images/search`;
     this.imageUrl = baseUrl + `?q=${q}&count=5&mkt=zh-CN&imageType=Photo&size=Large`;
   }

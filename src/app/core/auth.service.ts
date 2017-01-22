@@ -25,6 +25,24 @@ export class AuthService {
     this.subject.next(this.auth);
   }
 
+  register(username: string, password: string): Observable<Auth> {
+    let toAddUser = {
+      username: username,
+      password: password
+    };
+
+    return this.userService
+      .findUser(username)
+      .filter(user => user === null)
+      .switchMap(user => {
+        return this.userService.addUser(toAddUser).map(u => {
+          this.auth = Object.assign({}, {user: u, hasError: false, errMsg: null, redirectUrl: null});
+          this.subject.next(this.auth);
+          return this.auth;
+        })
+      })
+  }
+
   loginWithCredentials(username: string, password: string): Observable<Auth> {
     return this.userService
       .findUser(username)
