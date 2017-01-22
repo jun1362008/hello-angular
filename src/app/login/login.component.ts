@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, trigger, state, style, animate, transition } from '@angular/core';
 import { Auth, Image } from '../domain/entities';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,7 +6,19 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  animations: [
+    trigger('loginState', [
+      state('inactive', style({
+        transform: 'scale(1)'
+                              })),
+      state('active', style({
+        transform: 'scale(1.1)'
+                            })),
+      transition('inactive => active', animate('100ms ease-in')),
+      transition('active => inactive', animate('100ms ease-out'))
+    ])
+  ]
 })
 export class LoginComponent implements OnDestroy {
 
@@ -16,6 +28,7 @@ export class LoginComponent implements OnDestroy {
   photo = 'assets/login_default_bg.jpg';
   slides: Image[] = [];
   subscription: Subscription;
+  loginBtnState: string = 'inactive';
 
   constructor(@Inject('auth') private service,
     @Inject('bing') private bingService,
@@ -38,6 +51,10 @@ export class LoginComponent implements OnDestroy {
       i = (i + 1) % length;
       this.photo = this.slides[i].contentUrl;
     }, 4000)
+  }
+
+  toggleLoginState(state: boolean) {
+    this.loginBtnState = state ? 'active' : 'inactive';
   }
 
   onSubmit() {
