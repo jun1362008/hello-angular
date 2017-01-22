@@ -1,6 +1,11 @@
-input.ng-invalid{
-    border: 3px solid red;
+.login-container{
+    height: 100vh;
+    background-size: cover;                      /* <------ */
+    background-repeat: no-repeat;
+    background-position: center center;
 }
-input.ng-valid{
-    border: 3px solid green;
+.login-form {
+    background-color: transparent;
+    display: table;
+    padding-top: 50px;
 }
