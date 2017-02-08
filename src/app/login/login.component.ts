@@ -32,7 +32,7 @@ export class LoginComponent implements OnDestroy {
   subscription: Subscription;
   loginBtnState: string = 'inactive';
 
-  constructor(@Inject('auth') private service,
+  constructor(@Inject('auth') private authService,
     @Inject('bing') private bingService,
     private dialogService: MdlDialogService,
     private router: Router) {
@@ -77,7 +77,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   onSubmit() {
-    this.service.loginWithCredentials(this.username, this.password)
+    this.subscription = this.authService.loginWithCredentials(this.username, this.password)
         .subscribe(auth => {
           this.auth = Object.assign({}, auth);
           if(!auth.hasError) {
